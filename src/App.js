@@ -1,23 +1,40 @@
 import logo from './logo.svg';
 import './App.css';
+import {useState} from "react";
 
 function App() {
+  const urlPath = "http://ctp-zip-api.herokuapp.com/zip/"
+  const [input, setInput] = useState("")
+  const [cities, setCities] = useState({})
+
+  function handleEnter(e) {
+    if((e.key === 'Enter')){
+        let newURL = urlPath + input
+        fetch(newURL)
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data)
+                setCities({cities: data})
+                console.log(cities)
+            })
+            .catch(err =>{
+                console.log('not result')
+                setCities({cities:[]})
+            })
+
+    }
+
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <label htmlFor={"zip-code"}>Zip Code: </label>
+      <input type={"text"}
+             name={"zip-code"}
+             onChange={(e) => setInput(e.target.value)}
+             onKeyDown={handleEnter}/>
+        <div className={"cities"}>
+        </div>
     </div>
   );
 }
