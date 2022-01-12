@@ -38,7 +38,7 @@ class App extends Component {
     let res = new Array();
     for(let i = 0; i < len; i++){
       res.push(
-        <ul key = {"Section"+i}>
+        <ul key = {"CitySection"+i}>
           <h3 key = {"LocationText"+i} >{city[i].LocationText}</h3>
           <li key = {"State"+i} >State: {city[i].State}</li>
           <li key = {"Location"+i}>Location: ({city[i].Lat}, {city[i].Long})</li>
