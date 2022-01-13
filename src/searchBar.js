@@ -7,24 +7,27 @@ export default function SearchBar() {
     const urlPath = "http://ctp-zip-api.herokuapp.com/zip/"
     const [zip, setZip] = useState("")
     const [cities, setCities] = useState([])
+    const [header, setHeader] = useState("")
 
 
     function handleEnter(e) {
-        if ((e.key === 'Enter')) {
+        if (e.key === 'Enter' && zip.length === 5) {
             let newURL = urlPath + zip
             fetch(newURL)
                 .then((res) => res.json())
                 .then((data) => {
                     console.log(data)
+                    setHeader(`Cities associated with Zip code ${zip}`)
                     setCities(data)
                 })
                 .catch(err => {
                     console.log('not result')
+                    setHeader(`${zip} is not a valid zip code`)
                     setCities([])
                 })
 
             }
-        }
+        } 
 
         //debugger
 
@@ -39,7 +42,7 @@ export default function SearchBar() {
                        onKeyDown={handleEnter}/>
                 <div className={"cities"}>
                     <div>
-                        <h1>Zip code: {zip}</h1>
+                        <h1>{header}</h1>
                         {cities.map((city, i) => {
                             return (
                                 <CityData key={city.RecordNumber}
@@ -49,20 +52,6 @@ export default function SearchBar() {
                                           long={city.Long}
                                           population={city.EstimatedPopulation}/>)
                         })}
-                        {/*{Object.keys(zipInfo).map((zipInfo,i)=> {*/}
-                        {/*    //debugger*/}
-                        {/*     return (*/}
-                        {/*            <CityData*/}
-                        {/*                      key = {i}*/}
-                        {/*                      city={zipInfo.city}*/}
-                        {/*                      state={zipInfo.state}*/}
-                        {/*                      lat={zipInfo.lat}*/}
-                        {/*                      long={zipInfo.long}*/}
-                        {/*                      population={zipInfo.pop}/>)*/}
-
-                        {/*    })*/}
-                        {/*}*/}
-
                     </div>
                 </div>
             </div>
