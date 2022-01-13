@@ -11,8 +11,7 @@ class App extends Component {
     super();
     this.state = {
       input: "",
-      cities: [],
-      output: new Array()
+      cities: []
     }
   }
   
